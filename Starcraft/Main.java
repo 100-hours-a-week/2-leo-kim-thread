@@ -1,12 +1,20 @@
 package Starcraft;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Main {
     public static void main(String[] args) {
         BeforeStart beforeStart = new BeforeStart();
         beforeStart.play();
         Player player = beforeStart.player;
-        Starcraft starcraft = new Starcraft(player);
+        Player enemy = beforeStart.enemy;
+
+        Map<String, Player> players = new HashMap<>();
+        players.put(player.name, player);
+        players.put(enemy.name, enemy);
+
+        Starcraft starcraft = new Starcraft(players);
         starcraft.startGame();
-        starcraft.gameMenu();
     }
 }

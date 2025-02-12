@@ -5,10 +5,14 @@ import Starcraft.Unit.Unit;
 public class PlayerAction {
     private static final PlayerAction playerAction = new PlayerAction();
 
+    public static PlayerAction getInstance(){
+        return playerAction;
+    }
+
     public void increasePopulation(Player player){
-        if(player.minerals > 100){
-            player.minerals -= 100;
-            player.maxPopulation = Math.min((player.maxPopulation + 8), 200);
+        if(player.minerals > GameProperty.INCREASE_POP_MINERAL.getPlayerProperty()){
+            player.minerals -= GameProperty.INCREASE_POP_MINERAL.getPlayerProperty();
+            player.maxPopulation = Math.min((player.maxPopulation + GameProperty.INCREASE_POP.getPlayerProperty()), GameProperty.LIMIT_POPULATION.getPlayerProperty());
             System.out.println("성공적으로 인구수를 증가시켰습니다.");
             System.out.println("현재 인구수 : "+player.maxPopulation);
             return;
@@ -16,19 +20,16 @@ public class PlayerAction {
         System.out.println("미네랄이 부족합니다.");
     }
 
-    public static PlayerAction getInstance(){
-        return playerAction;
-    }
-
     public void createUnits(Player player, Unit unit, int numOfUnit){
         player.createdUnits.put(unit, player.createdUnits.getOrDefault(unit,0)+numOfUnit);
     }
 
     public void increaseMineralRate(Player player) {
-        if (player.minerals >= 50 && player.curPopulation < player.maxPopulation) {
-            player.minerals -= 50;
-            player.mineralRate += 8;
-            player.curPopulation++;
+        if (player.minerals >= GameProperty.INCREASE_MINERAL_RATE_MINERAL.getPlayerProperty()
+                && player.curPopulation < player.maxPopulation) {
+            player.minerals -= GameProperty.INCREASE_MINERAL_RATE_MINERAL.getPlayerProperty();
+            player.mineralRate += GameProperty.INCREASE_MINERAL_RATE.getPlayerProperty();
+            player.curPopulation += GameProperty.INCREASE_MINERAL_RATE_POP.getPlayerProperty();
             String worker = "";
             if (player.race.equals("Terran")) {
                 worker = "SCV";
@@ -41,7 +42,8 @@ public class PlayerAction {
             System.out.println("현재 미네랄 채취율 : " + player.mineralRate + "/sec");
             return;
         }
-        if (player.minerals < 50) {
+
+        if (player.minerals < GameProperty.INCREASE_MINERAL_RATE_MINERAL.getPlayerProperty()) {
             System.out.println("일꾼을 뽑을 미네랄이 부족합니다.");
             return;
         }
@@ -58,10 +60,11 @@ public class PlayerAction {
     }
 
     public void increaseGasRate(Player player) {
-        if (player.minerals >= 50 && player.curPopulation < player.maxPopulation) {
-            player.minerals -= 50;
-            player.gasRate += 8;
-            player.curPopulation++;
+        if (player.minerals >= GameProperty.INCREASE_GAS_RATE_MINERAL.getPlayerProperty()
+                && player.curPopulation < player.maxPopulation) {
+            player.minerals -= GameProperty.INCREASE_GAS_RATE_MINERAL.getPlayerProperty();
+            player.gasRate += GameProperty.INCREASE_GAS_RATE.getPlayerProperty();
+            player.curPopulation += GameProperty.INCREASE_GAS_RATE_POP.getPlayerProperty();
             String worker = "";
             if (player.race.equals("Terran")) {
                 worker = "SCV";
@@ -74,7 +77,7 @@ public class PlayerAction {
             System.out.println("현재 가스 채취율 : " + player.gasRate + "/sec");
             return;
         }
-        if (player.minerals < 50) {
+        if (player.minerals < GameProperty.INCREASE_GAS_RATE_MINERAL.getPlayerProperty()) {
             System.out.println("일꾼을 뽑을 미네랄이 부족합니다.");
             return;
         }

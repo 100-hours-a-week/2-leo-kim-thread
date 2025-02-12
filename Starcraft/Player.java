@@ -19,13 +19,13 @@ public class Player {
     Player(String name, String race) {
         this.name = name;
         this.race = race;
-        minerals = 200;
-        mineralRate = 32;
-        curPopulation = 4;
+        minerals = GameProperty.INIT_MINERALS.getPlayerProperty();
+        mineralRate = GameProperty.INIT_MINERAL_RATE.getPlayerProperty();
+        curPopulation = GameProperty.INIT_POPULATION.getPlayerProperty();
         if (race.equals("Terran")) {
-            maxPopulation = 10;
+            maxPopulation = GameProperty.INIT_TERRAN_MAX_POPULATION.getPlayerProperty();
         } else {
-            maxPopulation = 9;
+            maxPopulation = GameProperty.INIT_NON_TERRAN_MAX_POPULATION.getPlayerProperty();
         }
         createdUnits = new HashMap<>();
     }

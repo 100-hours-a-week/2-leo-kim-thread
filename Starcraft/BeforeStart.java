@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class BeforeStart {
     Player player;
+    Player enemy;
 
     void play(){
         System.out.println("유저의 닉네임을 입력하세요 :");
@@ -33,8 +34,12 @@ public class BeforeStart {
         }
 
         player = new Player(playerName, race);
+        String[] randomComputerRace = {"Terran", "Zerg", "Protoss"};
+        enemy = new Player("Computer", randomComputerRace[(int)(Math.random()*3)]);
+
         System.out.println(playerName+"님 스타크래프트에 오신 것을 환영합니다.");
         System.out.println("당신의 종족은 "+race+"입니다.");
+        System.out.println("상대방의 종족은 "+enemy.race+"입니다.");
         System.out.println("게임을 시작합니다!");
     }
 

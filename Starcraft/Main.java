@@ -14,7 +14,14 @@ public class Main {
         players.put(player.name, player);
         players.put(enemy.name, enemy);
 
-        Starcraft starcraft = Starcraft.getStarcraft(players);
+        Starcraft starcraft = Starcraft.getStarcraft(players,player);
+
+        // AI 행동을 위한 스레드 실행
+        Thread aiThread = new Thread(new ComputerAiPlayerAction(enemy));
+        aiThread.start();
+
+        BgmPlayer.playBgm(player.race);
+
         starcraft.startGame();
     }
 }

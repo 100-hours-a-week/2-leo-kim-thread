@@ -10,11 +10,16 @@ import java.util.*;
 public class GameMenu {
     private static final GameMenu gameMenu = new GameMenu();
     private static final PlayerAction playerAction = PlayerAction.getInstance();
+    private Map<String, Player> players;
     private final Map<String, String> unitListInfo;
 
     GameMenu() {
         unitListInfo = new HashMap<>();
         makeUnitCreationMenu();
+    }
+
+    public void setPlayers(Map<String, Player> players) {
+        this.players = players;
     }
 
     public static GameMenu getInstance() {
@@ -33,7 +38,8 @@ public class GameMenu {
                     4. 미네랄 채취율 증가
                     5. 가스 채취율 증가
                     6. 인구수 증가
-                    7. 게임 종료""";
+                    7. 정찰 하기
+                    8. 게임 종료""";
             System.out.println(menu);
             int choice = sc.nextInt();
             switch (choice) {
@@ -114,9 +120,28 @@ public class GameMenu {
                     }
                     break;
                 case 7:
+                    System.out.println("정찰 비용은 미네랄 일꾼 한마리입니다.");
+                    player.mineralRate -= 8;
+                    player.curPopulation -= 1;
+                    showOtherPlayers(players, player);
+                    break;
+                case 8:
                     endGame();
                     return;
             }
+        }
+    }
+
+    private void showOtherPlayers(Map<String,Player> players, Player player) {
+
+        for(String name : players.keySet()){
+            // 다른 사람의 정보만 열람
+            if(player.name.equals(name)){
+                continue;
+            }
+
+            Player otherPlayer = players.get(name);
+            System.out.println(otherPlayer);
         }
     }
 
@@ -233,6 +258,7 @@ public class GameMenu {
     }
 
     private void endGame() {
+        System.out.println("게임을 종료합니다!");
         System.exit(0);
     }
 }

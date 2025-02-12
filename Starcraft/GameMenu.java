@@ -1,6 +1,6 @@
 package Starcraft;
 
-import Starcraft.Unit.Factory.EnumUnitFactory;
+import Starcraft.Unit.EnumUnitFactory;
 import Starcraft.Unit.Unit;
 import Starcraft.Unit.UnitGases;
 import Starcraft.Unit.UnitMinerals;
@@ -11,15 +11,6 @@ public class GameMenu {
     private static final GameMenu gameMenu = new GameMenu();
     private static final PlayerAction playerAction = PlayerAction.getInstance();
     private final Map<String, String> unitListInfo;
-    private final String menu =
-            "\n=== 게임 메뉴 ===\n" +
-                    "1. 자원 현황\n" +
-                    "2. 유닛 생성\n" +
-                    "3. 유닛 목록\n" +
-                    "4. 미네랄 채취율 증가\n" +
-                    "5. 가스 채취율 증가\n" +
-                    "6. 인구수 증가\n" +
-                    "7. 게임 종료";
 
     GameMenu() {
         unitListInfo = new HashMap<>();
@@ -33,6 +24,16 @@ public class GameMenu {
     public void run(Player player) {
         Scanner sc = new Scanner(System.in);
         while (true) {
+            String menu = """
+                    
+                    === 게임 메뉴 ===
+                    1. 자원 현황
+                    2. 유닛 생성
+                    3. 유닛 목록
+                    4. 미네랄 채취율 증가
+                    5. 가스 채취율 증가
+                    6. 인구수 증가
+                    7. 게임 종료""";
             System.out.println(menu);
             int choice = sc.nextInt();
             switch (choice) {
@@ -46,13 +47,71 @@ public class GameMenu {
                     showUnitList(player);
                     break;
                 case 4:
-                    playerAction.increaseMineralRate(player);
+                    int actionResultMineral = playerAction.increaseMineralRate(player);
+                    switch(actionResultMineral){
+                        case 0:
+                            String worker = switch (player.race) {
+                                case "Terran" -> "SCV";
+                                case "Zerg" -> "Drone";
+                                case "Protoss" -> "Probe";
+                                default -> "";
+                            };
+                            System.out.println("성공적으로 " + worker + "를 추가하였습니다.");
+                            System.out.println("현재 미네랄 채취율 : " + player.mineralRate + "/sec");
+                            break;
+                        case 1:
+                            System.out.println("일꾼을 뽑을 미네랄이 부족합니다.");
+                            break;
+                        case 2:
+                            String supply = switch (player.race) {
+                                case "Terran" -> "Supply Depot";
+                                case "Zerg" -> "Overload";
+                                case "Protoss" -> "Pylon";
+                                default -> "";
+                            };
+                            System.out.println("최대 인구수입니다. " + supply + "를 더 추가하십시오.");
+                            break;
+                        case 3:
+                            break;
+                    }
                     break;
                 case 5:
-                    playerAction.increaseGasRate(player);
+                    int actionResultGas = playerAction.increaseGasRate(player);
+                    switch(actionResultGas) {
+                        case 0:
+                            String worker = switch (player.race) {
+                                case "Terran" -> "SCV";
+                                case "Zerg" -> "Drone";
+                                case "Protoss" -> "Probe";
+                                default -> "";
+                            };
+                            System.out.println("성공적으로 " + worker + "를 추가하였습니다.");
+                            System.out.println("현재 가스 채취율 : " + player.gasRate + "/sec");
+                            break;
+                        case 1:
+                            System.out.println("일꾼을 뽑을 미네랄이 부족합니다.");
+                            break;
+                        case 2:
+                            String supply = switch (player.race) {
+                                case "Terran" -> "Supply Depot";
+                                case "Zerg" -> "Overload";
+                                case "Protoss" -> "Pylon";
+                                default -> "";
+                            };
+                            System.out.println("최대 인구수입니다. " + supply + "를 더 추가하십시오.");
+                            break;
+                        case 3:
+                            break;
+                    }
                     break;
                 case 6:
-                    playerAction.increasePopulation(player);
+                    if(playerAction.increasePopulation(player)){
+                        System.out.println("성공적으로 인구수를 증가시켰습니다.");
+                        System.out.println("현재 인구수 : "+player.maxPopulation);
+                    }
+                    else{
+                        System.out.println("미네랄이 부족합니다.");
+                    }
                     break;
                 case 7:
                     endGame();
@@ -77,25 +136,27 @@ public class GameMenu {
 
         // 종족에 따라 생성 가능한 유닛 매칭
         EnumUnitFactory unitType = null;
-        if (player.race.equals("Terran")) {
-            switch (index) {
-                case 1: unitType = EnumUnitFactory.MARINE; break;
-                case 2: unitType = EnumUnitFactory.VULTURE; break;
-                case 3: unitType = EnumUnitFactory.TANK; break;
-            }
-        } else if (player.race.equals("Zerg")) {
-            switch (index) {
-                case 1: unitType = EnumUnitFactory.ZERGLING; break;
-                case 2: unitType = EnumUnitFactory.HYDRALISK; break;
-                case 3: unitType = EnumUnitFactory.MUTALISK; break;
-            }
-        } else if (player.race.equals("Protoss")) {
-            switch (index) {
-                case 1: unitType = EnumUnitFactory.ZEALOT; break;
-                case 2: unitType = EnumUnitFactory.DRAGOON; break;
-                case 3: unitType = EnumUnitFactory.REAVER; break;
-            }
-        }
+        unitType = switch (player.race) {
+            case "Terran" -> switch (index) {
+                case 1 -> EnumUnitFactory.MARINE;
+                case 2 -> EnumUnitFactory.VULTURE;
+                case 3 -> EnumUnitFactory.TANK;
+                default -> unitType;
+            };
+            case "Zerg" -> switch (index) {
+                case 1 -> EnumUnitFactory.ZERGLING;
+                case 2 -> EnumUnitFactory.HYDRALISK;
+                case 3 -> EnumUnitFactory.MUTALISK;
+                default -> unitType;
+            };
+            case "Protoss" -> switch (index) {
+                case 1 -> EnumUnitFactory.ZEALOT;
+                case 2 -> EnumUnitFactory.DRAGOON;
+                case 3 -> EnumUnitFactory.REAVER;
+                default -> unitType;
+            };
+            default -> null;
+        };
 
         if (unitType == null) {
             System.out.println("잘못된 입력입니다.");
@@ -175,3 +236,4 @@ public class GameMenu {
         System.exit(0);
     }
 }
+

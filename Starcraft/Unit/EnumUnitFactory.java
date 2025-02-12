@@ -1,7 +1,6 @@
-package Starcraft.Unit.Factory;
+package Starcraft.Unit;
 
 import Starcraft.Player;
-import Starcraft.Unit.*;
 
 public enum EnumUnitFactory {
     // ---------- 테란 유닛 ----------

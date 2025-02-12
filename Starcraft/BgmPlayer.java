@@ -12,7 +12,7 @@ public class BgmPlayer {
     public static void playBgm(String race){
         Thread bgmThread = new Thread(() -> {
             while(isPlaying) {
-                String filePathRoot = "bgm/"+race.toLowerCase()+"/"+race+" - ";
+                String filePathRoot = "2-leo-kim-thread/Starcraft/bgm/"+race.toLowerCase()+"/"+race+" - ";
                 int bgmIdx = (int)(Math.random()*3)+1;
                 String filePath = filePathRoot + bgmIdx + ".mp3";
                 try {

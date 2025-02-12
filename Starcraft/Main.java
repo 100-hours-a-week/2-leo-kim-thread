@@ -14,7 +14,7 @@ public class Main {
         players.put(player.name, player);
         players.put(enemy.name, enemy);
 
-        Starcraft starcraft = new Starcraft(players);
+        Starcraft starcraft = Starcraft.getStarcraft(players);
         starcraft.startGame();
     }
 }

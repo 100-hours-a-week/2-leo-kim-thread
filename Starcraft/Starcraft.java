@@ -6,31 +6,24 @@ import java.util.*;
 
 public class Starcraft {
     private final Map<String, Player> players;
-    private final PlayerAction playerAction = PlayerAction.getInstance();
     private final GameMenu gameMenu = GameMenu.getInstance();
     public static Timer resourceTimer;
     public static Timer unitAbilityTimer;
     private static Starcraft starcraft;
 
-    Starcraft(Map<String, Player> playerList) {
+    private Starcraft(Map<String, Player> playerList) {
         players = new HashMap<>();
         for(String name : playerList.keySet()){
             players.put(name, playerList.get(name));
         }
     }
 
-
-    public static Starcraft getInstance(Map<String, Player> playerList) {
-        if (starcraft == null) {
+    public static Starcraft getStarcraft(Map<String, Player> playerList){
+        if(starcraft == null){
             starcraft = new Starcraft(playerList);
         }
         return starcraft;
     }
-
-    public Map<String, Player> getPlayers(){
-        return players;
-    }
-
 
     public void startGame() {
         // 자원 수집 타이머 시작

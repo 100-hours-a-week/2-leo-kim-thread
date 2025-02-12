@@ -10,18 +10,18 @@ import java.util.*;
 public class GameMenu {
     private static final GameMenu gameMenu = new GameMenu();
     private static final PlayerAction playerAction = PlayerAction.getInstance();
-    private final Map<String,String> unitListInfo;
-    private final String menu = "            " +
+    private final Map<String, String> unitListInfo;
+    private final String menu =
             "\n=== 게임 메뉴 ===\n" +
-            "1. 자원 현황\n" +
-            "2. 유닛 생성\n" +
-            "3. 유닛 목록\n" +
-            "4. 미네랄 채취율 증가\n" +
-            "5. 가스 채취율 증가\n" +
-            "6. 인구수 증가\n" +
-            "7. 게임 종료";
+                    "1. 자원 현황\n" +
+                    "2. 유닛 생성\n" +
+                    "3. 유닛 목록\n" +
+                    "4. 미네랄 채취율 증가\n" +
+                    "5. 가스 채취율 증가\n" +
+                    "6. 인구수 증가\n" +
+                    "7. 게임 종료";
 
-    GameMenu(){
+    GameMenu() {
         unitListInfo = new HashMap<>();
         makeUnitCreationMenu();
     }
@@ -30,11 +30,10 @@ public class GameMenu {
         return gameMenu;
     }
 
-    public void run(Player player){
+    public void run(Player player) {
         Scanner sc = new Scanner(System.in);
         while (true) {
             System.out.println(menu);
-
             int choice = sc.nextInt();
             switch (choice) {
                 case 1:
@@ -62,8 +61,11 @@ public class GameMenu {
         }
     }
 
-    private void endGame() {
-        System.exit(0);
+    private void showResources(Player player) {
+        System.out.println("\n=== 자원 현황 ===");
+        System.out.println("미네랄: " + player.minerals);
+        System.out.println("가스: " + player.gases);
+        System.out.println("인구수: " + player.curPopulation + "/" + player.maxPopulation);
     }
 
     private void showUnitCreationMenu(Player player) {
@@ -104,12 +106,11 @@ public class GameMenu {
         createUnit(player, unitType);
     }
 
-
-    private void showResources(Player player) {
-        System.out.println("\n=== 자원 현황 ===");
-        System.out.println("미네랄: " + player.minerals);
-        System.out.println("가스: " + player.gases);
-        System.out.println("인구수: " + player.curPopulation + "/" + player.maxPopulation);
+    private void showUnitList(Player player) {
+        System.out.println("\n=== 보유 유닛 목록 ===");
+        for (Unit unit : player.createdUnits.keySet()) {
+            System.out.println(unit.name + " : " + player.createdUnits.get(unit) + "개 존재합니다.");
+        }
     }
 
     private void createUnit(Player player, EnumUnitFactory unitType) {
@@ -138,33 +139,20 @@ public class GameMenu {
         System.out.println(unit.name + "이 생산되었습니다.");
     }
 
-    private void showUnitList(Player player) {
-        System.out.println("\n=== 보유 유닛 목록 ===");
-        for (Unit unit : player.createdUnits.keySet()) {
-            System.out.println(unit.name + " : " + player.createdUnits.get(unit) + "개 존재합니다.");
-        }
-    }
-
-    private void endGame(Timer resourceTimer, Timer unitAbilityTimer) {
-        resourceTimer.cancel();
-        unitAbilityTimer.cancel();
-        System.out.println("게임을 종료합니다.");
-    }
-
-    private void makeUnitCreationMenu(){
+    private void makeUnitCreationMenu() {
         List<String>[] unitList = new ArrayList[3];
-        for(int i = 0; i<3; i++){
+        for (int i = 0; i < 3; i++) {
             unitList[i] = new ArrayList<>();
         }
-        String[] races = {"Terran","Zerg","Protoss"};
+        String[] races = {"Terran", "Zerg", "Protoss"};
 
-        unitList[0].addAll(List.of(new String[]{"MARINE", "VULTURE", "TANK"}));
-        unitList[1].addAll(List.of(new String[]{"ZERGLING","HYDRALISK","MUTALISK"}));
-        unitList[2].addAll(List.of(new String[]{"ZEALOT","DRAGOON","REAVER"}));
+        unitList[0].addAll(List.of("MARINE", "VULTURE", "TANK"));
+        unitList[1].addAll(List.of("ZERGLING", "HYDRALISK", "MUTALISK"));
+        unitList[2].addAll(List.of("ZEALOT", "DRAGOON", "REAVER"));
 
-        for(int i = 0; i<unitList.length; i++) {
+        for (int i = 0; i < unitList.length; i++) {
             String unitMenuString = getUnitInfo(unitList, i);
-            unitListInfo.put(races[i],unitMenuString);
+            unitListInfo.put(races[i], unitMenuString);
         }
     }
 
@@ -172,13 +160,18 @@ public class GameMenu {
         int unitIdx = 1;
         StringBuilder sb = new StringBuilder();
 
-        for(String unit : unitList[raceIdx]){
-            sb.append(unitIdx++).append(". ").append(unit).append(" (미네랄 : ").append(UnitMinerals.valueOf(unit + "_MINERAL").getMinerals());
-            int gas = UnitGases.valueOf(unit+"_GAS").getGases();
-            sb.append(gas == 0 ? ")" : " 가스 : "+gas+")");
+        for (String unit : unitList[raceIdx]) {
+            sb.append(unitIdx++).append(". ").append(unit).append(" (미네랄 : ")
+                    .append(UnitMinerals.valueOf(unit + "_MINERAL").getMinerals());
+            int gas = UnitGases.valueOf(unit + "_GAS").getGases();
+            sb.append(gas == 0 ? ")" : " 가스 : " + gas + ")");
             sb.append("\n");
         }
         sb.append("0. 뒤로가기");
         return sb.toString();
+    }
+
+    private void endGame() {
+        System.exit(0);
     }
 }

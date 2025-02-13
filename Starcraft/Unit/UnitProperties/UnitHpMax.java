@@ -1,4 +1,4 @@
-package Starcraft.Unit;
+package Starcraft.Unit.UnitProperties;
 
 public enum UnitHpMax {
     MARINE_HPMAX(40),

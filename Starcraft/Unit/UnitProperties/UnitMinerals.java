@@ -1,4 +1,4 @@
-package Starcraft.Unit;
+package Starcraft.Unit.UnitProperties;
 
 public enum UnitMinerals {
     // ---------- 테란 유닛 ----------

@@ -1,5 +1,6 @@
-package Starcraft;
+package Starcraft.Player;
 
+import Starcraft.GameProperty;
 import Starcraft.Unit.Unit;
 
 public class PlayerAction {

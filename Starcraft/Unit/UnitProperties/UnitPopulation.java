@@ -1,4 +1,4 @@
-package Starcraft.Unit;
+package Starcraft.Unit.UnitProperties;
 
 public enum UnitPopulation {
     MARINE_POP(1),

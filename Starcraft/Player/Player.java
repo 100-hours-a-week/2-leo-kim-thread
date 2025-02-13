@@ -1,5 +1,6 @@
-package Starcraft;
+package Starcraft.Player;
 
+import Starcraft.GameProperty;
 import Starcraft.Unit.Unit;
 
 import java.util.HashMap;
@@ -16,7 +17,7 @@ public class Player {
     public int curPopulation;
     public Map<Unit, Integer> createdUnits;
 
-    Player(String name, String race) {
+    public Player(String name, String race) {
         this.name = name;
         this.race = race;
         minerals = GameProperty.INIT_MINERALS.getPlayerProperty();

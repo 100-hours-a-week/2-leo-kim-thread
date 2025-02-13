@@ -1,5 +1,9 @@
 package Starcraft;
 
+import Starcraft.AiPlayer.ComputerAiPlayerAction;
+import Starcraft.Player.Player;
+import Starcraft.Bgm.BgmPlayer;
+
 import java.util.HashMap;
 import java.util.Map;
 

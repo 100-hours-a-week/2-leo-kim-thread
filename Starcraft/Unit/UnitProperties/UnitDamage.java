@@ -1,4 +1,4 @@
-package Starcraft.Unit;
+package Starcraft.Unit.UnitProperties;
 
 public enum UnitDamage {
     MARINE_DAMAGE(6),

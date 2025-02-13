@@ -1,9 +1,8 @@
-package Starcraft;
+package Starcraft.Bgm;
 
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.advanced.AdvancedPlayer;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 public class BgmPlayer {
@@ -12,7 +11,7 @@ public class BgmPlayer {
     public static void playBgm(String race){
         Thread bgmThread = new Thread(() -> {
             while(isPlaying) {
-                String filePathRoot = "2-leo-kim-thread/Starcraft/bgm/"+race.toLowerCase()+"/"+race+" - ";
+                String filePathRoot = "2-leo-kim-thread/Starcraft/Bgm/"+race.toLowerCase()+"/"+race+" - ";
                 int bgmIdx = (int)(Math.random()*3)+1;
                 String filePath = filePathRoot + bgmIdx + ".mp3";
                 try {

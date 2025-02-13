@@ -1,9 +1,11 @@
 package Starcraft;
 
+import Starcraft.Player.Player;
+import Starcraft.Player.PlayerAction;
 import Starcraft.Unit.EnumUnitFactory;
 import Starcraft.Unit.Unit;
-import Starcraft.Unit.UnitGases;
-import Starcraft.Unit.UnitMinerals;
+import Starcraft.Unit.UnitProperties.UnitGases;
+import Starcraft.Unit.UnitProperties.UnitMinerals;
 
 import java.util.*;
 
@@ -120,10 +122,22 @@ public class GameMenu {
                     }
                     break;
                 case 7:
-                    System.out.println("정찰 비용은 미네랄 일꾼 한마리입니다.");
-                    player.mineralRate -= 8;
-                    player.curPopulation -= 1;
-                    showOtherPlayers(players, player);
+                    System.out.println("정찰 비용은 일꾼 한마리입니다.");
+                    if(player.mineralRate <= 0){
+                        if(player.gasRate <= 0){
+                            System.out.println("정찰 보낼 일꾼이 존재하지 않습니다.");
+                        }
+                        else{
+                            player.gasRate -= 8;
+                            player.curPopulation -= 1;
+                            showOtherPlayers(players, player);
+                        }
+                    }
+                    else{
+                        player.mineralRate -= 8;
+                        player.curPopulation -= 1;
+                        showOtherPlayers(players, player);
+                    }
                     break;
                 case 8:
                     endGame();

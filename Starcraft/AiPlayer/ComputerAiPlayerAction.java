@@ -1,5 +1,8 @@
-package Starcraft;
+package Starcraft.AiPlayer;
 
+import Starcraft.GameProperty;
+import Starcraft.Player.Player;
+import Starcraft.Player.PlayerAction;
 import Starcraft.Unit.EnumUnitFactory;
 import Starcraft.Unit.Unit;
 

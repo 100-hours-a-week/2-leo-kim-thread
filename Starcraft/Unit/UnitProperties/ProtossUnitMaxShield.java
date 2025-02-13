@@ -1,4 +1,4 @@
-package Starcraft.Unit;
+package Starcraft.Unit.UnitProperties;
 
 public enum ProtossUnitMaxShield {
     ZEALOT_MAXSHIELD(60),

@@ -1,5 +1,8 @@
 package Starcraft;
 
+import Starcraft.AiPlayer.ComputerAiPlayer;
+import Starcraft.Player.Player;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 

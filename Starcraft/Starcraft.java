@@ -1,6 +1,6 @@
 package Starcraft;
 
-import Starcraft.Unit.*;
+import Starcraft.Player.Player;
 
 import java.util.*;
 

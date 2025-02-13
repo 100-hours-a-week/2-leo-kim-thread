@@ -43,6 +43,7 @@ public class GameMenu {
                     7. 정찰 하기
                     8. 게임 종료""";
             System.out.println(menu);
+            try{
             int choice = sc.nextInt();
             switch (choice) {
                 case 1:
@@ -56,7 +57,7 @@ public class GameMenu {
                     break;
                 case 4:
                     int actionResultMineral = playerAction.increaseMineralRate(player);
-                    switch(actionResultMineral){
+                    switch (actionResultMineral) {
                         case 0:
                             String worker = switch (player.race) {
                                 case "Terran" -> "SCV";
@@ -85,7 +86,7 @@ public class GameMenu {
                     break;
                 case 5:
                     int actionResultGas = playerAction.increaseGasRate(player);
-                    switch(actionResultGas) {
+                    switch (actionResultGas) {
                         case 0:
                             String worker = switch (player.race) {
                                 case "Terran" -> "SCV";
@@ -113,27 +114,24 @@ public class GameMenu {
                     }
                     break;
                 case 6:
-                    if(playerAction.increasePopulation(player)){
+                    if (playerAction.increasePopulation(player)) {
                         System.out.println("성공적으로 인구수를 증가시켰습니다.");
-                        System.out.println("현재 인구수 : "+player.maxPopulation);
-                    }
-                    else{
+                        System.out.println("현재 인구수 : " + player.maxPopulation);
+                    } else {
                         System.out.println("미네랄이 부족합니다.");
                     }
                     break;
                 case 7:
                     System.out.println("정찰 비용은 일꾼 한마리입니다.");
-                    if(player.mineralRate <= 0){
-                        if(player.gasRate <= 0){
+                    if (player.mineralRate <= 0) {
+                        if (player.gasRate <= 0) {
                             System.out.println("정찰 보낼 일꾼이 존재하지 않습니다.");
-                        }
-                        else{
+                        } else {
                             player.gasRate -= 8;
                             player.curPopulation -= 1;
                             showOtherPlayers(players, player);
                         }
-                    }
-                    else{
+                    } else {
                         player.mineralRate -= 8;
                         player.curPopulation -= 1;
                         showOtherPlayers(players, player);
@@ -141,7 +139,13 @@ public class GameMenu {
                     break;
                 case 8:
                     endGame();
-                    return;
+                default:
+                    System.out.println("잘못된 입력입니다. 다시 입력해주세요.");
+                }
+
+            }catch(InputMismatchException e){
+                System.out.println("잘못된 입력입니다. 다시 입력해주세요.");
+                sc.nextLine();
             }
         }
     }

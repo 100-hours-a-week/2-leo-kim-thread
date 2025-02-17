@@ -60,9 +60,9 @@ public class GameMenu {
                     switch (actionResultMineral) {
                         case 0:
                             String worker = switch (player.race) {
-                                case "Terran" -> "SCV";
-                                case "Zerg" -> "Drone";
-                                case "Protoss" -> "Probe";
+                                case "Terran" -> WorkerName.TERRAN_WORKER.getWorkerName();
+                                case "Zerg" -> WorkerName.ZERG_WORKER.getWorkerName();
+                                case "Protoss" -> WorkerName.PROTOSS_WORKER.getWorkerName();
                                 default -> "";
                             };
                             System.out.println("성공적으로 " + worker + "를 추가하였습니다.");
@@ -73,9 +73,9 @@ public class GameMenu {
                             break;
                         case 2:
                             String supply = switch (player.race) {
-                                case "Terran" -> "Supply Depot";
-                                case "Zerg" -> "Overload";
-                                case "Protoss" -> "Pylon";
+                                case "Terran" -> WorkerName.TERRAN_WORKER.getWorkerName();
+                                case "Zerg" -> WorkerName.ZERG_WORKER.getWorkerName();
+                                case "Protoss" -> WorkerName.PROTOSS_WORKER.getWorkerName();
                                 default -> "";
                             };
                             System.out.println("최대 인구수입니다. " + supply + "를 더 추가하십시오.");
@@ -102,9 +102,9 @@ public class GameMenu {
                             break;
                         case 2:
                             String supply = switch (player.race) {
-                                case "Terran" -> "Supply Depot";
-                                case "Zerg" -> "Overload";
-                                case "Protoss" -> "Pylon";
+                                case "Terran" -> PopulationName.TERRAN_POP.getPopName();
+                                case "Zerg" -> PopulationName.ZERG_POP.getPopName();
+                                case "Protoss" -> PopulationName.PROTOSS_POP.getPopName();
                                 default -> "";
                             };
                             System.out.println("최대 인구수입니다. " + supply + "를 더 추가하십시오.");

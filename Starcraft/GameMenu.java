@@ -127,13 +127,13 @@ public class GameMenu {
                         if (player.gasRate <= 0) {
                             System.out.println("정찰 보낼 일꾼이 존재하지 않습니다.");
                         } else {
-                            player.gasRate -= 8;
-                            player.curPopulation -= 1;
+                            player.gasRate -= GameProperty.INCREASE_GAS_RATE.getPlayerProperty();
+                            player.curPopulation -= GameProperty.INCREASE_GAS_RATE_POP.getPlayerProperty();
                             showOtherPlayers(players, player);
                         }
                     } else {
-                        player.mineralRate -= 8;
-                        player.curPopulation -= 1;
+                        player.mineralRate -= GameProperty.INCREASE_MINERAL_RATE.getPlayerProperty();
+                        player.curPopulation -= GameProperty.INCREASE_MINERAL_RATE_POP.getPlayerProperty();
                         showOtherPlayers(players, player);
                     }
                     break;
